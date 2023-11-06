@@ -1,42 +1,25 @@
-from collections import deque
+graph = {
+    'A': ['B', 'C', 'D'],
+    'C': ['A', 'E'],
+    'B': ['A'],
+    'D': ['A', 'E'],
+    'E': []
+}
 
+def bfs(node):
+    visited = [False] * (len(graph))  # Initialize a list to track visited nodes
+    queue = []  # Initialize the queue for BFS
+    visited.append(node)
+    queue.append(node)
+    while queue:
+        v = queue.pop(0)
+        print(v, end=' ')
+        for neigh in graph[v]:
+            if neigh not in visited:
+                visited.append(neigh)
+                queue.append(neigh)
 
-class Graph:
-    def __init__(self):
-        self.graph = {}
-
-    def add_edge(self, u, v):
-        if u in self.graph:
-            self.graph[u].append(v)
-        else:
-            self.graph[u] = [v]
-        if v in self.graph:
-            self.graph[v].append(u)
-        else:
-            self.graph[v] = [u]
-
-    def bfs(self, start):
-        visited = set()
-        queue = deque([start])
-        visited.add(start)
-
-        while queue:
-            node = queue.popleft()
-            print(node, end=" ")
-
-            for neighbor in self.graph.get(node, []):
-                if neighbor not in visited:
-                    queue.append(neighbor)
-                    visited.add(neighbor)
-
-# Example usage:
-g = Graph()
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(2, 0)
-g.add_edge(2, 3)
-g.add_edge(3, 3)
-
-print("BFS starting from vertex 2:")
-g.bfs(2)
+# Driver Code
+if __name__ == "__main__":
+    print("The BFS traversal for the graph is:")
+    bfs('A')
